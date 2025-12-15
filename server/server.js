@@ -20,9 +20,10 @@ app.use(express.json());
 // Servir archivos estáticos
 app.use(express.static(path.join(__dirname, "../client")));
 
-const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-});
+// segmento variable:
+// en este ejemplo se uso variables de entorno por seguridad, puedes ver como añadir variables de entorno en la documentación de google:
+// https://ai.google.dev/gemini-api/docs/api-key?hl=es-419#set-api-env-var
+const ai = new GoogleGenAI({});
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../client/index.html"));
