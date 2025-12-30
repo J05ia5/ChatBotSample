@@ -1,34 +1,65 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ThreadMap Clone</title>
-        <!-- Fuente Serif para títulos -->
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-        <!-- Iconos FontAwesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="chat-container">
-            <div id="messages">
-                <div class="message bot-message">
-                    ¡Hola! Soy tu primer robot. Aún no soy muy listo, pero
-                    aprendo rápido.
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThreadMap Clone</title>
+    <!-- Fuente Serif para títulos (parecida a la imagen) -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar Izquierdo -->
+        <aside class="sidebar">
+            <div class="sidebar-icon">
+                <i class="fa-regular fa-comment-dots"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </aside>
+
+        <!-- Contenido Principal -->
+        <main class="main-content">
+            
+            <!-- Cabecera -->
+            <header class="header">
+                <div class="logo">ThreadMap</div>
+                <div class="header-actions">
+                    <!-- Icono de incognito/gafas o menú -->
+                    <i class="fa-solid fa-ellipsis"></i>
+                </div>
+            </header>
+
+            <!-- VISTA DE CHAT (Imagen 2) -->
+            <div class="scroll-area" id="chat-view" style="display: none;"> <!-- OJO: display none inicial -->
+            </div>
+
+            <!-- VISTA DE BIENVENIDA -->
+            <div class="welcome-area">
+                <h1>Hola Josias</h1>
+                <h2>¿En que puedo ayudarte hoy?</h2>
+            </div> 
+            
+            <!-- Barra de Entrada (Común a ambas vistas) -->
+            <div class="input-area">
+                <div class="input-container">
+                    <button class="icon-btn add-btn">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    <input type="text" id="main-input" placeholder="Pregunta lo que quieras">
+                    <button class="icon-btn voice-btn">
+                        <i class="fa-solid fa-bars-staggered"></i> <!-- Icono simula onda de voz -->
+                    </button>
                 </div>
             </div>
 
-            <div id="input-area">
-                <input
-                    type="text"
-                    id="user-input"
-                    placeholder="Escribe algo aquí..."
-                />
-                <button>Enviar</button>
-            </div>
-        </div>
-
-        <script type="module" src="pruebas.js"></script>
-    </body>
+        </main>
+    </div>
+    <script type="module" src="pruebas.js"></script>
+</body>
 </html>
