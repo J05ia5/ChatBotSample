@@ -1,106 +1,107 @@
 # ChatBot ThreadMap
-## Creacion de un chat bot con Node.js. 
 
-Primeramente, se tiene que instalar Node.js, puedes hacerlo desde su pagina oficial en:
-https://nodejs.org/en/download
+## Descripción
 
-y ejecutar el siguiente comando en la terminal:
+Proyecto de ejemplo que muestra cómo crear un chatbot sencillo con Node.js. Incluye un servidor local y una interfaz cliente para probar interacciones con una API de inteligencia artificial (en el ejemplo se menciona Google Gemini).
 
-    node .\server.js
-ejemplo (estando dentro de la carpeta server):
+## Requisitos
+
+-   Node.js (descargar desde https://nodejs.org/en/download)
+
+## Instalación y ejecución
+
+1. Abra una terminal y sitúese en la carpeta `server` del proyecto.
+2. Instale dependencias (si **no** existe `package.json`):
+
+        npm install express cors dotenv @google/genai
+
+3. Inicie el servidor:
+
+        node ./server.js
+
+Ejemplo (ejecutado desde la carpeta `server`):
+
 <pre>
 PS C:\Users\josia\Proyects\ChatBotSample\server> node .\server.js
 [dotenv@17.2.3] injecting env (1) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
 Servidor Gemini corriendo en http://localhost:3000
 </pre>
 
-y entrar a la direccion del servidor.
+Abra la URL indicada (por ejemplo, http://localhost:3000) en su navegador para acceder al cliente.
 
 ---
-> En este ejemplo se uso variables de entorno por seguridad, puedes ver como añadir variables de entorno en la documentación de google:
+
+## Variables de entorno
+
+En este ejemplo se usan variables de entorno por seguridad; puede ver cómo añadir una variable de entorno en la documentación de Google:
+
 https://ai.google.dev/gemini-api/docs/api-key?hl=es-419#set-api-env-var
 
----
-<u> ***Para prubeas rapidas*** </u>, puedes modificar el archivo [.env](server/.env):
+Para pruebas rápidas puede modificar el archivo [.env](server/.env) (siendo esto un ejemplo) y añadir su clave API:
 
-    OPENAI_API_KEY = "aqui deveria ir tu llave API, sin comillas"
+    GEMINI_API_KEY=tu_api_key_aqui
 
-> En este proyecto se uso la API key de Google Gemini
-puedes optener la tuya solo con una cuenta de google en el siguiente enlcae:
-https://aistudio.google.com/api-keys
-
-luego:
-
-en "segmento variable", linea 26 del archivo [server.js](server/server.js):
-se debe modificar con:
+En el código, asegúrese de inicializar el cliente de IA con la variable correspondiente. Por ejemplo, edite [server.js](server/server.js) (siendo esto un ejemplo) y cambie el segmento de configuración por:
 
     const ai = new GoogleGenAI({
         apiKey: process.env.GEMINI_API_KEY,
     });
 
----
-## Errores que me pasaron
-al instalar Node.js, *npm* (gestor de paquetes del ecosistema Node.js) viene incluido por defecto, y tube el siguiente problema:
-<pre>
-PS C:\Users\josia\Proyects\ChatBotSample\server> node --version
-v24.12.0
-PS C:\Users\josia\Proyects\ChatBotSample\server> npm --version
-npm : File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system. For more information,
-see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
-At line:1 char:1
-+ npm --version
-+ ~~~
-    + CategoryInfo          : SecurityError: (:) [], PSSecurityException
-    + FullyQualifiedErrorId : UnauthorizedAccess
-</pre>
+Si utiliza otra API (por ejemplo OpenAI), adapte el nombre de la variable y la inicialización según corresponda.
 
-y el problema radica en:
+Para obtener una clave de Google Gemini puede visitar:
 
-> running scripts is disabled on this system
+https://aistudio.google.com/api-keys
 
-En Windows, PowerShell bloquea por defecto la ejecución de scripts (.ps1) por motivos de seguridad.
-El comando npm en Windows se ejecuta a través del archivo:
-        
-    C:\Program Files\nodejs\npm.ps1
-
-PowerShell usa una política llamada Execution Policy
-puedes ver el estado con el comando:
-
-    Get-ExecutionPolicy
-
-<pre>
-PS C:\Users\josia\Proyects\ChatBotSample\server> Get-ExecutionPolicy
-Restricted
-</pre>
-
-> puedes saber mas del significado de los estados, y todo sobre *Execution Policy* en:
-> https://learn.microsoft.com/es-es/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5
-
-y la solucion directa es aplicar el siguiente comando para cambiar la politica a una que si permite ejecutar scripts locales (como npm).
-
-    Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-y eso soluciona el problema de **nppm**
+> Nota: después de crear o modificar variables de entorno en Windows, abra una nueva sesión de terminal para que las variables estén disponibles.
 
 ---
-Otro error que tube fue el siguiente:
-<pre>
-PS C:\Users\josia\Proyects\ChatBotSample\server> node .\server.js
-[dotenv@17.2.3] injecting env (1) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
-Servidor Gemini corriendo en http://localhost:3000
-Error: Could not load the default credentials. Browse to https://cloud.google.com/docs/authentication/getting-started for more information.
-</pre>
 
-y este fue por que habia hecho todos los cambios de la variable de entorno mientra mi secion de powershell estaba activa, en la misma documentacion indica lo siguiente luego de añadir una variable de entorno:
-> Open a new terminal session (cmd or Powershell) to get the new variable.
-> (Abre una nueva sesión de terminal (cmd o Powershell) para obtener la nueva variable.)
+## Problemas comunes y soluciones
 
-entonces, como no encontro mi variable de entorno google está intentando usar credenciales de Google Cloud (ADC) (lo que no tenemos para este ejemplo)
+-   Error al ejecutar `npm` en PowerShell:
 
-y la solucion fue solo salirse y volver a entrar, y todo funciono perfectamente
+    Mensaje típico:
 
-## Como se ve
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e956ecc9-0176-48dd-9609-aed7031da175" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/13fcade0-c857-4c72-9a36-d10a924467de" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5fb1b9d2-4e0d-41a8-a256-79a1f3ccb66b" />
+    > File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system.
 
+    Causa: PowerShell bloquea la ejecución de scripts por políticas de seguridad.
+
+    Consulte la documentación sobre políticas de ejecución:
+
+    https://learn.microsoft.com/es-es/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5
+
+    Solución: abrir PowerShell como usuario actual y ejecutar:
+
+        Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+    Esto permite ejecutar scripts locales firmados o creados por el usuario.
+
+-   Error: "Could not load the default credentials" al iniciar el servidor:
+
+    Mensaje típico al iniciar:
+
+    > Error: Could not load the default credentials. Browse to https://cloud.google.com/docs/authentication/getting-started for more information.
+
+    Causa: la librería de Google no encuentra la clave o las credenciales necesarias, normalmente porque la variable de entorno no está cargada en la sesión actual.
+
+
+    Solución: asegúrese de definir la variable de entorno (p. ej. `GEMINI_API_KEY`), cierre la sesión de terminal y abra una nueva antes de ejecutar `node server.js`.
+
+---
+
+## Estructura del proyecto
+
+-   `server/` - Código del servidor (`server.js`) y archivo de variables de entorno [.env](server/.env) (siendo esto un ejemplo).
+-   `client/` - Interfaz web estática (`index.html`, `pruebas.js`, `style.css`).
+
+---
+
+## Capturas
+
+Las siguientes imágenes muestran la interfaz y el funcionamiento del ejemplo:
+
+![Screenshot 1](https://github.com/user-attachments/assets/e956ecc9-0176-48dd-9609-aed7031da175)
+![Screenshot 2](https://github.com/user-attachments/assets/13fcade0-c857-4c72-9a36-d10a924467de)
+![Screenshot 3](https://github.com/user-attachments/assets/5fb1b9d2-4e0d-41a8-a256-79a1f3ccb66b)
 
